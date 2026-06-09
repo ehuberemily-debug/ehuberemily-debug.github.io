@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alles Gute zum Geburtstag, Papa!</title>
+    <!-- Modern rounded typography and elegant handwriting font for the personal card -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fredoka:wght@300..700&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Clean vector favicon (minimalist candle flame) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><path d=%22M50 15 C45 35 30 55 50 85 C70 55 55 35 50 15 Z%22 fill=%22%23ff9f1c%22/></svg>">
+</head>
+<body>
+    <!-- Full-screen Canvas for Confetti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Ambient particles for background depth -->
+    <div class="ambient-glow"></div>
+
+    <!-- Music Toggle Button (Glassmorphic Floating Action Button) -->
+    <button id="music-toggle" class="glass-btn float-btn" aria-label="Musik abspielen" title="Musik ein/aus">
+        <svg class="music-icon icon-play" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+        </svg>
+        <svg class="music-icon icon-pause hidden" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+    </button>
+
+    <main class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title animate-pop-in">Alles Liebe zum Geburtstag!</h1>
+            <p class="subtitle animate-fade-in">Klicke auf die Kerzen, um sie auszupusten...</p>
+        </header>
+
+        <!-- Interactive Cake & Surprise Area -->
+        <div class="stage-container">
+            
+            <!-- Premium Greeting Card (revealed when all candles are blown out) -->
+            <div id="greeting-card" class="greeting-card hidden">
+                <div class="card-glow-border"></div>
+                <div class="card-paper">
+                    <h2 class="card-title">Lieber Papa,</h2>
+                    <p class="message-text">
+                        „Happy Birthday Papa! Zum Geburtstag schenke ich dir einen gemeinsamen Kinobesuch oder Frühstücken gehen mit mir! Deine Emily“
+                    </p>
+                </div>
+            </div>
+
+            <!-- Cake Wrapper containing cake and candle overlay -->
+            <div class="cake-wrapper">
+                <!-- Realistic 3D Perspective Birthday Cake -->
+                <div id="cake" class="cake">
+                    <svg viewBox="0 0 240 200" width="100%" height="100%" class="cake-svg">
+                        <defs>
+                            <!-- Radial Glow behind the cake -->
+                            <radialGradient id="cakeGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ffd166" stop-opacity="0.35"/>
+                                <stop offset="100%" stop-color="#ffd166" stop-opacity="0"/>
+                            </radialGradient>
+
+                            <!-- Cake Stand Chrome Gradient -->
+                            <linearGradient id="standGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#334155"/>
+                                <stop offset="25%" stop-color="#94a3b8"/>
+                                <stop offset="50%" stop-color="#f1f5f9"/>
+                                <stop offset="75%" stop-color="#94a3b8"/>
+                                <stop offset="100%" stop-color="#334155"/>
+                            </linearGradient>
+
+                            <!-- Bottom Layer Cylinder Body Gradient (Shaded 3D cylinder) -->
+                            <linearGradient id="bottomLayerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#9d1737"/>
+                                <stop offset="20%" stop-color="#ff4d6d"/>
+                                <stop offset="50%" stop-color="#ffccd5"/>
+                                <stop offset="80%" stop-color="#ff4d6d"/>
+                                <stop offset="100%" stop-color="#9d1737"/>
+                            </linearGradient>
+                            <!-- Bottom Layer Top Surface (Flat perspective ellipse) -->
+                            <linearGradient id="bottomLayerTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff85a1"/>
+                                <stop offset="100%" stop-color="#ffccd5"/>
+                            </linearGradient>
+                            <!-- Cream Frosting Drips (Shaded) -->
+                            <linearGradient id="bottomCreamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#fff0f3"/>
+                                <stop offset="50%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#fff0f3"/>
+                            </linearGradient>
+
+                            <!-- Top Layer Cylinder Body Gradient (Shaded 3D cylinder) -->
+                            <linearGradient id="topLayerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#4c057a"/>
+                                <stop offset="20%" stop-color="#7209b7"/>
+                                <stop offset="50%" stop-color="#e9d5ff"/>
+                                <stop offset="80%" stop-color="#7209b7"/>
+                                <stop offset="100%" stop-color="#4c057a"/>
+                            </linearGradient>
+                            <!-- Top Layer Top Surface (Flat perspective ellipse) -->
+                            <linearGradient id="topLayerTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#b794f4"/>
+                                <stop offset="100%" stop-color="#f3e8ff"/>
+                            </linearGradient>
+                            <!-- Top Cream Frosting Drips (Shaded) -->
+                            <linearGradient id="topCreamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#faf5ff"/>
+                                <stop offset="50%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#faf5ff"/>
+                            </linearGradient>
+
+                            <!-- Cylindrical Candle Wax Gradients -->
+                            <linearGradient id="candle1Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#b45309"/>
+                                <stop offset="50%" stop-color="#fef08a"/>
+                                <stop offset="100%" stop-color="#b45309"/>
+                            </linearGradient>
+                            <linearGradient id="candle2Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#1d4ed8"/>
+                                <stop offset="50%" stop-color="#93c5fd"/>
+                                <stop offset="100%" stop-color="#1d4ed8"/>
+                            </linearGradient>
+                            <linearGradient id="candle3Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#6b21a8"/>
+                                <stop offset="50%" stop-color="#e9d5ff"/>
+                                <stop offset="100%" stop-color="#6b21a8"/>
+                            </linearGradient>
+
+                            <!-- Realistic Radial Candle Flame Gradients -->
+                            <radialGradient id="flameGrad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="25%" stop-color="#fef08a"/>
+                                <stop offset="65%" stop-color="#f97316"/>
+                                <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+                            </radialGradient>
+                            <radialGradient id="flameInnerGrad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="45%" stop-color="#fde047"/>
+                                <stop offset="100%" stop-color="#ea580c" stop-opacity="0"/>
+                            </radialGradient>
+                        </defs>
+
+                        <!-- Warm light source glow behind the cake -->
+                        <ellipse cx="120" cy="110" rx="95" ry="65" fill="url(#cakeGlow)" class="cake-glow-back"/>
+
+                        <!-- Cake Stand (Realistic 3D Chrome) -->
+                        <path d="M 30 180 Q 120 195 210 180 L 195 192 Q 120 198 45 192 Z" fill="url(#standGrad)" stroke="#475569" stroke-width="0.5"/>
+                        <ellipse cx="120" cy="180" rx="90" ry="12" fill="url(#standGrad)" stroke="#64748b" stroke-width="0.5"/>
+                        <path d="M 105 180 L 112 192 L 128 192 L 135 180 Z" fill="url(#standGrad)" stroke="#475569" stroke-width="0.5"/>
+
+                        <!-- Bottom Cake Layer (Realistic Cylinder) -->
+                        <path d="M 45 130 A 75 12 0 0 0 195 130 L 195 170 A 75 12 0 0 1 45 170 Z" fill="url(#bottomLayerGrad)" stroke="#9d1737" stroke-width="0.5"/>
+                        <ellipse cx="120" cy="130" rx="75" ry="12" fill="url(#bottomLayerTopGrad)" stroke="#ff4d6d" stroke-width="0.5"/>
+                        
+                        <!-- Cream Frosting Drips (Realistic 3D curves) -->
+                        <path d="M 45 130 A 75 12 0 0 0 195 130 Q 185 145 175 133 Q 165 148 155 132 Q 145 142 135 132 Q 125 146 115 133 Q 105 143 95 132 Q 85 148 75 133 Q 65 143 55 132 Q 50 142 45 130 Z" fill="url(#bottomCreamGrad)"/>
+
+                        <!-- Top Cake Layer (Realistic Cylinder) -->
+                        <path d="M 65 85 A 55 9 0 0 0 175 85 L 175 120 A 55 9 0 0 1 65 120 Z" fill="url(#topLayerGrad)" stroke="#4c057a" stroke-width="0.5"/>
+                        <ellipse cx="120" cy="85" rx="55" ry="9" fill="url(#topLayerTopGrad)" stroke="#7209b7" stroke-width="0.5"/>
+                        
+                        <!-- Top Cream Frosting Drips (Realistic 3D curves) -->
+                        <path d="M 65 85 A 55 9 0 0 0 175 85 Q 167 98 159 88 Q 151 100 143 87 Q 135 95 127 87 Q 119 98 111 88 Q 103 96 95 88 Q 87 99 79 88 Q 72 96 65 85 Z" fill="url(#topCreamGrad)"/>
+
+                        <!-- Sprinkles on Top Layer (Shaded) -->
+                        <rect x="75" y="88" width="3" height="7" rx="1.5" transform="rotate(30 75 88)" fill="#ff4d6d"/>
+                        <rect x="110" y="89" width="3" height="7" rx="1.5" transform="rotate(-15 110 89)" fill="#ff4d6d"/>
+                        <rect x="150" y="88" width="3" height="7" rx="1.5" transform="rotate(45 150 88)" fill="#ff4d6d"/>
+                        
+                        <rect x="92" y="87" width="3" height="7" rx="1.5" transform="rotate(-40 92 87)" fill="#4dadff"/>
+                        <rect x="130" y="87" width="3" height="7" rx="1.5" transform="rotate(20 130 87)" fill="#4dadff"/>
+                        <rect x="160" y="93" width="3" height="7" rx="1.5" transform="rotate(-10 160 93)" fill="#4dadff"/>
+                        
+                        <rect x="83" y="93" width="3" height="7" rx="1.5" transform="rotate(15 83 93)" fill="#ffd166"/>
+                        <rect x="120" y="93" width="3" height="7" rx="1.5" transform="rotate(-35 120 93)" fill="#ffd166"/>
+                        <rect x="140" y="92" width="3" height="7" rx="1.5" transform="rotate(50 140 92)" fill="#ffd166"/>
+
+                        <!-- Candles (Standing realistically on top surface ellipse at cy=85) -->
+                        <!-- Candle 1 (Left) -->
+                        <g class="candle" id="candle-1">
+                            <rect x="87" y="55" width="6" height="28" fill="url(#candle1Grad)" rx="1"/>
+                            <path d="M 90 55 L 90 50" stroke="#334155" stroke-width="1.2" stroke-linecap="round"/>
+                            <!-- Flame Outer & Inner -->
+                            <path d="M 90 50 C 86 45, 86 38, 90 32 C 94 38, 94 45, 90 50 Z" fill="url(#flameGrad)" class="flame"/>
+                            <path d="M 90 48 C 87.5 44.5, 87.5 40, 90 35.5 C 92.5 40, 92.5 44.5, 90 48 Z" fill="url(#flameInnerGrad)" class="flame-inner"/>
+                            <!-- Transparent click area -->
+                            <rect x="75" y="25" width="30" height="60" fill="transparent" cursor="pointer"/>
+                        </g>
+
+                        <!-- Candle 2 (Middle) -->
+                        <g class="candle" id="candle-2">
+                            <rect x="117" y="56" width="6" height="30" fill="url(#candle2Grad)" rx="1"/>
+                            <path d="M 120 56 L 120 51" stroke="#334155" stroke-width="1.2" stroke-linecap="round"/>
+                            <!-- Flame Outer & Inner -->
+                            <path d="M 120 51 C 116 46, 116 39, 120 33 C 124 39, 124 46, 120 51 Z" fill="url(#flameGrad)" class="flame"/>
+                            <path d="M 120 49 C 117.5 45.5, 117.5 41, 120 36.5 C 122.5 41, 122.5 45.5, 120 49 Z" fill="url(#flameInnerGrad)" class="flame-inner"/>
+                            <rect x="105" y="26" width="30" height="62" fill="transparent" cursor="pointer"/>
+                        </g>
+
+                        <!-- Candle 3 (Right) -->
+                        <g class="candle" id="candle-3">
+                            <rect x="147" y="55" width="6" height="28" fill="url(#candle3Grad)" rx="1"/>
+                            <path d="M 150 55 L 150 50" stroke="#334155" stroke-width="1.2" stroke-linecap="round"/>
+                            <!-- Flame Outer & Inner -->
+                            <path d="M 150 50 C 146 45, 146 38, 150 32 C 154 38, 154 45, 150 50 Z" fill="url(#flameGrad)" class="flame"/>
+                            <path d="M 150 48 C 147.5 44.5, 147.5 40, 150 35.5 C 152.5 40, 152.5 44.5, 150 48 Z" fill="url(#flameInnerGrad)" class="flame-inner"/>
+                            <rect x="135" y="25" width="30" height="60" fill="transparent" cursor="pointer"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Alternative Action Button (Fallback) -->
+            <button id="trigger-btn" class="glass-btn primary-btn">Lass uns feiern!</button>
+        </div>
+
+        <!-- Gift Presentation Area -->
+        <section id="gift-section" class="gift-section hidden">
+            <h2 class="section-title">Wähle dein Geburtstagsgeschenk:</h2>
+            <div class="gifts-grid">
+                
+                <!-- Option 1: Kinobesuch -->
+                <div class="gift-card" id="gift-cinema" role="button" tabindex="0">
+                    <div class="card-glow"></div>
+                    <div class="gift-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <rect x="15" y="30" width="70" height="40" rx="6" fill="none" stroke="#ff4d6d" stroke-width="4"/>
+                            <line x1="38" y1="30" x2="38" y2="70" stroke="#ff4d6d" stroke-dasharray="4,4" stroke-width="2"/>
+                            <path d="M 15 45 A 5 5 0 0 1 15 55 Z" fill="#ff4d6d"/>
+                            <path d="M 85 45 A 5 5 0 0 0 85 55 Z" fill="#ff4d6d"/>
+                            <rect x="48" y="44" width="20" height="12" rx="2" fill="none" stroke="#ff4d6d" stroke-width="3"/>
+                            <polygon points="68,48 76,44 76,56 68,52" fill="none" stroke="#ff4d6d" stroke-width="3"/>
+                            <circle cx="53" cy="39" r="4" fill="none" stroke="#ff4d6d" stroke-width="3"/>
+                            <circle cx="63" cy="39" r="4" fill="none" stroke="#ff4d6d" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="gift-title">Gemeinsamer Kinobesuch</h3>
+                    <p class="gift-desc">Ein gemütlicher Filmabend im Kino deiner Wahl mit großem Popcorn, Snacks und kühlen Getränken.</p>
+                    <span class="choose-badge">Kino wählen</span>
+                </div>
+
+                <!-- Option 2: Frühstücken gehen -->
+                <div class="gift-card" id="gift-breakfast" role="button" tabindex="0">
+                    <div class="card-glow"></div>
+                    <div class="gift-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <path d="M 32 38 L 34 65 C 35 72, 65 72, 66 65 L 68 38 Z" fill="none" stroke="#7209b7" stroke-width="4"/>
+                            <path d="M 67 44 Q 78 48, 76 58 Q 74 62, 66 60" fill="none" stroke="#7209b7" stroke-width="4"/>
+                            <ellipse cx="50" cy="74" rx="26" ry="5" fill="none" stroke="#7209b7" stroke-width="4"/>
+                            <path d="M 42 28 Q 45 22, 42 16" fill="none" stroke="#7209b7" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M 50 28 Q 53 20, 50 14" fill="none" stroke="#7209b7" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M 58 28 Q 61 22, 58 16" fill="none" stroke="#7209b7" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="gift-title">Frühstücken gehen</h3>
+                    <p class="gift-desc">Ein leckeres, ausgiebiges Sonntagsfrühstück mit frischen Brötchen, Croissants, Kaffee und allem, was das Herz begehrt.</p>
+                    <span class="choose-badge font-purple">Frühstück wählen</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Selection Confirmation Dialog -->
+        <div id="selection-modal" class="modal hidden">
+            <div class="modal-content glass-card">
+                <h3 id="modal-title">Hervorragende Wahl!</h3>
+                <p id="modal-body"></p>
+                <button id="modal-close" class="glass-btn primary-btn">Freue mich schon!</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Mit Liebe gemacht für Papa. Deine Emily, 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

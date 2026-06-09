@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alles Gute zum Geburtstag, Papa!</title>
+    <!-- Modern rounded typography and elegant handwriting font for the personal card -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Fredoka:wght@300..700&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Clean vector favicon (minimalist candle flame) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><path d=%22M50 15 C45 35 30 55 50 85 C70 55 55 35 50 15 Z%22 fill=%22%23ff9f1c%22/></svg>">
+    
+    <style>
+        /* ----------------------------------------------------
+           DESIGN SYSTEM & CUSTOM PROPERTIES
+           ---------------------------------------------------- */
+        :root {
+            /* Color Palette */
+            --bg-dark: #07070a;
+            --bg-gradient: linear-gradient(135deg, #07070a 0%, #0d0d1e 35%, #1b0a2a 70%, #070714 100%);
+            
+            --primary: #ff4d6d;
+            --primary-hover: #ff758f;
+            --primary-light: #fff0f3;
+            
+            --secondary: #7209b7;
+            --secondary-hover: #b794f4;
+            --secondary-light: #faf5ff;
+            
+            --accent-yellow: #ffd166;
+            --accent-blue: #4dadff;
+            
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dark: #1e293b;
+            
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            --glass-blur: blur(16px);
+
+            /* Fonts */
+            --font-display: 'Fredoka', cursive, sans-serif;
+            --font-body: 'Outfit', sans-serif;
+            --font-handwriting: 'Caveat', cursive;
+        }
+
+        /* ----------------------------------------------------
+           BASE STYLES
+           ---------------------------------------------------- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-dark);
+            background-image: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Fullscreen Background Elements */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            width: 70vw;
+            height: 70vw;
+            top: 10%;
+            left: 15%;
+            background: radial-gradient(circle, rgba(114, 9, 183, 0.12) 0%, rgba(255, 77, 109, 0.06) 50%, rgba(0,0,0,0) 100%);
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(50px);
+            animation: pulse-glow 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.7; }
+            100% { transform: scale(1.15) translate(-3%, 3%); opacity: 1; }
+        }
+
+        /* App Layout Container */
+        .app-container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 900px;
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3.5rem;
+            flex-grow: 1;
+        }
+
+        /* ----------------------------------------------------
+           HEADER STYLES
+           ---------------------------------------------------- */
+        .header {
+            text-align: center;
+            max-width: 600px;
+        }
+
+        .title {
+            font-family: var(--font-display);
+            font-size: 2.6rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff4d6d, #ffd166, #b794f4, #4dadff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 6s infinite ease-in-out alternate;
+            margin-bottom: 0.8rem;
+            line-height: 1.25;
+            text-shadow: 0 4px 20px rgba(255, 77, 109, 0.15);
+        }
+
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ----------------------------------------------------
+           INTERACTIVE BUTTONS (GLASSMORPHIC)
+           ---------------------------------------------------- */
+        .glass-btn {
+            font-family: var(--font-display);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            color: var(--text-main);
+            padding: 0.8rem 1.6rem;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            box-shadow: var(--glass-shadow);
+        }
+
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px 0 rgba(0, 0, 0, 0.55);
+        }
+
+        .glass-btn:active {
+            transform: translateY(0);
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, #e01e5a 100%);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.05rem;
+            box-shadow: 0 8px 25px rgba(255, 77, 109, 0.25);
+        }
+
+        .primary-btn:hover {
+            background: linear-gradient(135deg, var(--primary-hover) 0%, #ff4d6d 100%);
+            box-shadow: 0 12px 30px rgba(255, 77, 109, 0.45);
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        /* Floating Music Toggle Button */
+        .float-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            padding: 0;
+            z-index: 100;
+        }
+
+        .music-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .float-btn:hover .music-icon {
+            transform: scale(1.15);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ----------------------------------------------------
+           THE STAGE (CAKE & SURPRISE)
+           ---------------------------------------------------- */
+        .stage-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        /* Cake Wrapper - Fluid & Responsive scale */
+        .cake-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            aspect-ratio: 320 / 280;
+            margin-top: 50px;
+        }
+
+        /* SVG Styling */
+        .cake-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .cake {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 5;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.45));
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .cake:hover {
+            transform: scale(1.02);
+        }
+
+        /* Ambient backlight glow inside the SVG */
+        .cake-glow-back {
+            transition: opacity 1.2s ease;
+            opacity: 0.9;
+        }
+
+        .cake-wrapper.celebrating .cake-glow-back {
+            opacity: 0.1; /* Dims when candles are blown out to show they went dark */
+        }
+
+        /* ----------------------------------------------------
+           CANDLE ANIMATIONS WITH TRANSFORM-BOX
+           ---------------------------------------------------- */
+        .flame {
+            animation: flicker 1.4s infinite ease-in-out alternate;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+
+        .flame-inner {
+            animation: flicker-inner 1.1s infinite ease-in-out alternate;
+            transform-origin: center bottom;
+            transform-box: fill-box;
+        }
+
+        /* Interactive candles blowing out */
+        .candle {
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+
+        .candle:hover {
+            filter: brightness(1.15) drop-shadow(0 0 8px rgba(255, 209, 102, 0.7));
+        }
+
+        .candle.blown-out .flame,
+        .candle.blown-out .flame-inner {
+            display: none;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-1.5deg); }
+            50% { transform: scale(1.08) rotate(1.5deg); }
+            100% { transform: scale(0.92) rotate(-1deg); }
+        }
+
+        @keyframes flicker-inner {
+            0% { transform: scale(1) rotate(1deg); }
+            50% { transform: scale(1.15) rotate(-1.5deg); }
+            100% { transform: scale(0.85) rotate(0deg); }
+        }
+
+        /* Smoke particles when candle blown out */
+        .smoke-puff {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(226, 232, 240, 0.55);
+            pointer-events: none;
+            z-index: 10;
+            animation: float-smoke 0.8s forwards ease-out;
+        }
+
+        @keyframes float-smoke {
+            0% { transform: translateY(0) scale(0.5); opacity: 0.7; }
+            100% { transform: translateY(-40px) scale(1.4); opacity: 0; filter: blur(3px); }
+        }
+
+        /* Shaking cake on blow out */
+        .cake-wrapper.celebrating .cake {
+            animation: shake-cake 0.5s ease-out;
+        }
+
+        @keyframes shake-cake {
+            0%, 100% { transform: scale(1); }
+            20%, 60% { transform: scale(0.98) rotate(-1deg); }
+            40%, 80% { transform: scale(1.01) rotate(1deg); }
+        }
+
+        /* ----------------------------------------------------
+           PREMIUM GREETING CARD DESIGN (REALISTIC & HANDWRITTEN)
+           ---------------------------------------------------- */
+        .greeting-card {
+            position: absolute;
+            top: -140px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.7);
+            z-index: 10;
+            width: 290px;
+            opacity: 0;
+            transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            pointer-events: none;
+        }
+
+        .greeting-card.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-25px) scale(1);
+            pointer-events: auto;
+        }
+
+        /* Realistic gold border glow card wrapper */
+        .card-glow-border {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(135deg, #d4af37, #fef08a, #aa7c11, #fef08a, #d4af37);
+            border-radius: 20px;
+            z-index: 0;
+            opacity: 0.6;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+            animation: gold-shimmer 6s infinite linear;
+        }
+
+        @keyframes gold-shimmer {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .card-paper {
+            position: relative;
+            background: #fbfbfa; /* High-quality matte paper ivory color */
+            border-radius: 18px;
+            padding: 1.8rem 1.6rem;
+            z-index: 1;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.02), 0 10px 25px rgba(0,0,0,0.3);
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .card-title {
+            font-family: var(--font-handwriting);
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4c057a;
+            margin-bottom: 0.8rem;
+        }
+
+        .message-text {
+            font-family: var(--font-handwriting);
+            font-size: 1.55rem;
+            color: #1e293b;
+            line-height: 1.45;
+            font-weight: 600;
+        }
+
+        /* ----------------------------------------------------
+           GIFT SECTION & INTERACTIVE CARDS
+           ---------------------------------------------------- */
+        .gift-section {
+            width: 100%;
+            max-width: 800px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gift-section.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.7rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-main);
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            width: 100%;
+        }
+
+        @media (min-width: 650px) {
+            .gifts-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .gift-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: 20px;
+            padding: 2.2rem 1.8rem;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: var(--glass-shadow);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .card-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 120%;
+            height: 120%;
+            background: radial-gradient(circle, rgba(255, 77, 109, 0.05) 0%, rgba(0,0,0,0) 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #gift-breakfast .card-glow {
+            background: radial-gradient(circle, rgba(114, 9, 183, 0.08) 0%, rgba(0,0,0,0) 70%);
+        }
+
+        .gift-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 255, 255, 0.03);
+        }
+
+        .gift-card:hover .card-glow {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .gift-icon {
+            background: rgba(255, 255, 255, 0.03);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.4s ease;
+        }
+
+        .gift-card:hover .gift-icon {
+            transform: scale(1.06) rotate(2deg);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        #gift-cinema:hover svg rect,
+        #gift-cinema:hover svg line,
+        #gift-cinema:hover svg path,
+        #gift-cinema:hover svg circle,
+        #gift-cinema:hover svg polygon {
+            stroke: var(--primary-hover);
+        }
+
+        #gift-breakfast:hover svg path,
+        #gift-breakfast:hover svg ellipse {
+            stroke: var(--secondary-hover);
+        }
+
+        .gift-title {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--text-main);
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        #gift-cinema:hover .gift-title {
+            color: var(--primary-hover);
+        }
+
+        #gift-breakfast:hover .gift-title {
+            color: var(--secondary-hover);
+        }
+
+        .gift-desc {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            z-index: 1;
+            max-width: 280px;
+        }
+
+        .choose-badge {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            background: rgba(255, 77, 109, 0.12);
+            border: 1px solid rgba(255, 77, 109, 0.25);
+            color: var(--primary-hover);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            z-index: 1;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .font-purple {
+            background: rgba(183, 148, 244, 0.12);
+            border: 1px solid rgba(183, 148, 244, 0.25);
+            color: var(--secondary-hover);
+        }
+
+        .gift-card:hover .choose-badge {
+            background: var(--primary);
+            color: white;
+            border-color: transparent;
+            transform: scale(1.04);
+            box-shadow: 0 4px 12px rgba(255, 77, 109, 0.25);
+        }
+
+        .gift-card:hover .font-purple {
+            background: var(--secondary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(114, 9, 183, 0.25);
+        }
+
+        /* ----------------------------------------------------
+           MODAL / CONFIRMATION DIALOG
+           ---------------------------------------------------- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 5, 8, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content {
+            background: rgba(15, 15, 26, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            padding: 2.2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+            transform: scale(0.85);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+
+        #modal-title {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: var(--accent-yellow);
+        }
+
+        #modal-body {
+            color: var(--text-main);
+            font-size: 1rem;
+            line-height: 1.55;
+        }
+
+        /* ----------------------------------------------------
+           FOOTER
+           ---------------------------------------------------- */
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 2rem 1.5rem;
+            border-top: 1px solid var(--glass-border);
+            background: rgba(7, 7, 10, 0.5);
+            z-index: 2;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: auto;
+        }
+
+        /* ----------------------------------------------------
+           ANIMATION TRIGGERS & DELAYS
+           ---------------------------------------------------- */
+        .animate-pop-in {
+            opacity: 0;
+            transform: scale(0.9);
+            animation: pop-in 0.6s forwards cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .animate-fade-in {
+            opacity: 0;
+            animation: fade-in 0.8s 0.3s forwards ease-out;
+        }
+
+        @keyframes pop-in {
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes fade-in {
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Full-screen Canvas for Confetti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Ambient particles for background depth -->
+    <div class="ambient-glow"></div>
+
+    <!-- Music Toggle Button (Glassmorphic Floating Action Button) -->
+    <button id="music-toggle" class="glass-btn float-btn" aria-label="Musik abspielen" title="Musik ein/aus">
+        <svg class="music-icon icon-play" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6zm-2 16c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+        </svg>
+        <svg class="music-icon icon-pause hidden" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+        </svg>
+    </button>
+
+    <main class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title animate-pop-in">Alles Liebe zum Geburtstag!</h1>
+            <p class="subtitle animate-fade-in">Klicke auf die Kerzen, um sie auszupusten...</p>
+        </header>
+
+        <!-- Interactive Cake & Surprise Area -->
+        <div class="stage-container">
+            
+            <!-- Premium Greeting Card (revealed when all candles are blown out) -->
+            <div id="greeting-card" class="greeting-card hidden">
+                <div class="card-glow-border"></div>
+                <div class="card-paper">
+                    <h2 class="card-title">Lieber Papa,</h2>
+                    <p class="message-text">
+                        „Happy Birthday Papa! Zum Geburtstag schenke ich dir einen gemeinsamen Kinobesuch oder Frühstücken gehen mit mir! Deine Emily“
+                    </p>
+                </div>
+            </div>
+
+            <!-- Cake Wrapper containing cake and candle overlay -->
+            <div class="cake-wrapper">
+                <!-- Realistic 3D Perspective Birthday Cake -->
+                <div id="cake" class="cake">
+                    <svg viewBox="0 0 240 200" width="100%" height="100%" class="cake-svg">
+                        <defs>
+                            <!-- Radial Glow behind the cake -->
+                            <radialGradient id="cakeGlow" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ffd166" stop-opacity="0.35"/>
+                                <stop offset="100%" stop-color="#ffd166" stop-opacity="0"/>
+                            </radialGradient>
+
+                            <!-- Cake Stand Chrome Gradient -->
+                            <linearGradient id="standGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#334155"/>
+                                <stop offset="25%" stop-color="#94a3b8"/>
+                                <stop offset="50%" stop-color="#f1f5f9"/>
+                                <stop offset="75%" stop-color="#94a3b8"/>
+                                <stop offset="100%" stop-color="#334155"/>
+                            </linearGradient>
+
+                            <!-- Bottom Layer Cylinder Body Gradient (Shaded 3D cylinder) -->
+                            <linearGradient id="bottomLayerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#9d1737"/>
+                                <stop offset="20%" stop-color="#ff4d6d"/>
+                                <stop offset="50%" stop-color="#ffccd5"/>
+                                <stop offset="80%" stop-color="#ff4d6d"/>
+                                <stop offset="100%" stop-color="#9d1737"/>
+                            </linearGradient>
+                            <!-- Bottom Layer Top Surface (Flat perspective ellipse) -->
+                            <linearGradient id="bottomLayerTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ff85a1"/>
+                                <stop offset="100%" stop-color="#ffccd5"/>
+                            </linearGradient>
+                            <!-- Cream Frosting Drips (Shaded) -->
+                            <linearGradient id="bottomCreamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#fff0f3"/>
+                                <stop offset="50%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#fff0f3"/>
+                            </linearGradient>
+
+                            <!-- Top Layer Cylinder Body Gradient (Shaded 3D cylinder) -->
+                            <linearGradient id="topLayerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#4c057a"/>
+                                <stop offset="20%" stop-color="#7209b7"/>
+                                <stop offset="50%" stop-color="#e9d5ff"/>
+                                <stop offset="80%" stop-color="#7209b7"/>
+                                <stop offset="100%" stop-color="#4c057a"/>
+                            </linearGradient>
+                            <!-- Top Layer Top Surface (Flat perspective ellipse) -->
+                            <linearGradient id="topLayerTopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#b794f4"/>
+                                <stop offset="100%" stop-color="#f3e8ff"/>
+                            </linearGradient>
+                            <!-- Top Cream Frosting Drips (Shaded) -->
+                            <linearGradient id="topCreamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#faf5ff"/>
+                                <stop offset="50%" stop-color="#ffffff"/>
+                                <stop offset="100%" stop-color="#faf5ff"/>
+                            </linearGradient>
+
+                            <!-- Cylindrical Candle Wax Gradients -->
+                            <linearGradient id="candle1Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#b45309"/>
+                                <stop offset="50%" stop-color="#fef08a"/>
+                                <stop offset="100%" stop-color="#b45309"/>
+                            </linearGradient>
+                            <linearGradient id="candle2Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#1d4ed8"/>
+                                <stop offset="50%" stop-color="#93c5fd"/>
+                                <stop offset="100%" stop-color="#1d4ed8"/>
+                            </linearGradient>
+                            <linearGradient id="candle3Grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#6b21a8"/>
+                                <stop offset="50%" stop-color="#e9d5ff"/>
+                                <stop offset="100%" stop-color="#6b21a8"/>
+                            </linearGradient>
+
+                            <!-- Realistic Radial Candle Flame Gradients -->
+                            <radialGradient id="flameGrad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="25%" stop-color="#fef08a"/>
+                                <stop offset="65%" stop-color="#f97316"/>
+                                <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+                            </radialGradient>
+                            <radialGradient id="flameInnerGrad" cx="50%" cy="50%" r="50%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="45%" stop-color="#fde047"/>
+                                <stop offset="100%" stop-color="#ea580c" stop-opacity="0"/>
+                            </radialGradient>
+                        </defs>
+
+                        <!-- Warm light source glow behind the cake -->
+                        <ellipse cx="120" cy="110" rx="95" ry="65" fill="url(#cakeGlow)" class="cake-glow-back"/>
+
+                        <!-- Cake Stand (Realistic 3D Chrome) -->
+                        <path d="M 30 180 Q 120 195 210 180 L 195 192 Q 120 198 45 192 Z" fill="url(#standGrad)" stroke="#475569" stroke-width="0.5"/>
+                        <ellipse cx="120" cy="180" rx="90" ry="12" fill="url(#standGrad)" stroke="#64748b" stroke-width="0.5"/>
+                        <path d="M 105 180 L 112 192 L 128 192 L 135 180 Z" fill="url(#standGrad)" stroke="#475569" stroke-width="0.5"/>
+
+                        <!-- Bottom Cake Layer (Realistic Cylinder) -->
+                        <path d="M 45 130 A 75 12 0 0 0 195 130 L 195 170 A 75 12 0 0 1 45 170 Z" fill="url(#bottomLayerGrad)" stroke="#9d1737" stroke-width="0.5"/>
+                        <ellipse cx="120" cy="130" rx="75" ry="12" fill="url(#bottomLayerTopGrad)" stroke="#ff4d6d" stroke-width="0.5"/>
+                        
+                        <!-- Cream Frosting Drips (Realistic 3D curves) -->
+                        <path d="M 45 130 A 75 12 0 0 0 195 130 Q 185 145 175 133 Q 165 148 155 132 Q 145 142 135 132 Q 125 146 115 133 Q 105 143 95 132 Q 85 148 75 133 Q 65 143 55 132 Q 50 142 45 130 Z" fill="url(#bottomCreamGrad)"/>
+
+                        <!-- Top Cake Layer (Realistic Cylinder) -->
+                        <path d="M 65 85 A 55 9 0 0 0 175 85 L 175 120 A 55 9 0 0 1 65 120 Z" fill="url(#topLayerGrad)" stroke="#4c057a" stroke-width="0.5"/>
+                        <ellipse cx="120" cy="85" rx="55" ry="9" fill="url(#topLayerTopGrad)" stroke="#7209b7" stroke-width="0.5"/>
+                        
+                        <!-- Top Cream Frosting Drips (Realistic 3D curves) -->
+                        <path d="M 65 85 A 55 9 0 0 0 175 85 Q 167 98 159 88 Q 151 100 143 87 Q 135 95 127 87 Q 119 98 111 88 Q 103 96 95 88 Q 87 99 79 88 Q 72 96 65 85 Z" fill="url(#topCreamGrad)"/>
+
+                        <!-- Sprinkles on Top Layer (Shaded) -->
+                        <rect x="75" y="88" width="3" height="7" rx="1.5" transform="rotate(30 75 88)" fill="#ff4d6d"/>
+                        <rect x="110" y="89" width="3" height="7" rx="1.5" transform="rotate(-15 110 89)" fill="#ff4d6d"/>
+                        <rect x="150" y="88" width="3" height="7" rx="1.5" transform="rotate(45 150 88)" fill="#ff4d6d"/>
+                        
+                        <rect x="92" y="87" width="3" height="7" rx="1.5" transform="rotate(-40 92 87)" fill="#4dadff"/>
+                        <rect x="130" y="87" width="3" height="7" rx="1.5" transform="rotate(20 130 87)" fill="#4dadff"/>
+                        <rect x="160" y="93" width="3" height="7" rx="1.5" transform="rotate(-10 160 93)" fill="#4dadff"/>
+                        
+                        <rect x="83" y="93" width="3" height="7" rx="1.5" transform="rotate(15 83 93)" fill="#ffd166"/>
+                        <rect x="120" y="93" width="3" height="7" rx="1.5" transform="rotate(-35 120 93)" fill="#ffd166"/>
+                        <rect x="140" y="92" width="3" height="7" rx="1.5" transform="rotate(50 140 92)" fill="#ffd166"/>
+
+                        <!-- Candles (Standing realistically on top surface ellipse at cy=85) -->
+                        <!-- Candle 1 (Left) -->
+                        <g class="candle" id="candle-1">
+                            <rect x="87" y="55" width="6" height="28" fill="url(#candle1Grad)" rx="1"/>
+                            <path d="M 90 55 L 90 50" stroke="#334155" stroke-width="1.2" stroke-linecap="round"/>
+                            <!-- Flame Outer & Inner -->
+                            <path d="M 90 50 C 86 45, 86 38, 90 32 C 94 38, 94 45, 90 50 Z" fill="url(#flameGrad)" class="flame"/>
+                            <path d="M 90 48 C 87.5 44.5, 87.5 40, 90 35.5 C 92.5 40, 92.5 44.5, 90 48 Z" fill="url(#flameInnerGrad)" class="flame-inner"/>
+                            <!-- Transparent click area -->
+                            <rect x="75" y="25" width="30" height="60" fill="transparent" cursor="pointer"/>
+                        </g>
+
+                        <!-- Candle 2 (Middle) -->
+                        <g class="candle" id="candle-2">
+                            <rect x="117" y="56" width="6" height="30" fill="url(#candle2Grad)" rx="1"/>
+                            <path d="M 120 56 L 120 51" stroke="#334155" stroke-width="1.2" stroke-linecap="round"/>
+                            <!-- Flame Outer & Inner -->
+                            <path d="M 120 51 C 116 46, 116 39, 120 33 C 124 39, 124 46, 120 51 Z" fill="url(#flameGrad)" class="flame"/>
+                            <path d="M 120 49 C 117.5 45.5, 117.5 41, 120 36.5 C 122.5 41, 122.5 45.5, 120 49 Z" fill="url(#flameInnerGrad)" class="flame-inner"/>
+                            <rect x="105" y="26" width="30" height="62" fill="transparent" cursor="pointer"/>
+                        </g>
+
+                        <!-- Candle 3 (Right) -->
+                        <g class="candle" id="candle-3">
+                            <rect x="147" y="55" width="6" height="28" fill="url(#candle3Grad)" rx="1"/>
+                            <path d="M 150 55 L 150 50" stroke="#334155" stroke-width="1.2" stroke-linecap="round"/>
+                            <!-- Flame Outer & Inner -->
+                            <path d="M 150 50 C 146 45, 146 38, 150 32 C 154 38, 154 45, 150 50 Z" fill="url(#flameGrad)" class="flame"/>
+                            <path d="M 150 48 C 147.5 44.5, 147.5 40, 150 35.5 C 152.5 40, 152.5 44.5, 150 48 Z" fill="url(#flameInnerGrad)" class="flame-inner"/>
+                            <rect x="135" y="25" width="30" height="60" fill="transparent" cursor="pointer"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Alternative Action Button -->
+            <button id="trigger-btn" class="glass-btn primary-btn">Lass uns feiern!</button>
+        </div>
+
+        <!-- Gift Presentation Area -->
+        <section id="gift-section" class="gift-section hidden">
+            <h2 class="section-title">Wähle dein Geburtstagsgeschenk:</h2>
+            <div class="gifts-grid">
+                
+                <!-- Option 1: Kinobesuch -->
+                <div class="gift-card" id="gift-cinema" role="button" tabindex="0">
+                    <div class="card-glow"></div>
+                    <div class="gift-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <rect x="15" y="30" width="70" height="40" rx="6" fill="none" stroke="#ff4d6d" stroke-width="4"/>
+                            <line x1="38" y1="30" x2="38" y2="70" stroke="#ff4d6d" stroke-dasharray="4,4" stroke-width="2"/>
+                            <path d="M 15 45 A 5 5 0 0 1 15 55 Z" fill="#ff4d6d"/>
+                            <path d="M 85 45 A 5 5 0 0 0 85 55 Z" fill="#ff4d6d"/>
+                            <rect x="48" y="44" width="20" height="12" rx="2" fill="none" stroke="#ff4d6d" stroke-width="3"/>
+                            <polygon points="68,48 76,44 76,56 68,52" fill="none" stroke="#ff4d6d" stroke-width="3"/>
+                            <circle cx="53" cy="39" r="4" fill="none" stroke="#ff4d6d" stroke-width="3"/>
+                            <circle cx="63" cy="39" r="4" fill="none" stroke="#ff4d6d" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <h3 class="gift-title">Gemeinsamer Kinobesuch</h3>
+                    <p class="gift-desc">Ein gemütlicher Filmabend im Kino deiner Wahl mit großem Popcorn, Snacks und kühlen Getränken.</p>
+                    <span class="choose-badge">Kino wählen</span>
+                </div>
+
+                <!-- Option 2: Frühstücken gehen -->
+                <div class="gift-card" id="gift-breakfast" role="button" tabindex="0">
+                    <div class="card-glow"></div>
+                    <div class="gift-icon">
+                        <svg viewBox="0 0 100 100" width="80" height="80">
+                            <path d="M 32 38 L 34 65 C 35 72, 65 72, 66 65 L 68 38 Z" fill="none" stroke="#7209b7" stroke-width="4"/>
+                            <path d="M 67 44 Q 78 48, 76 58 Q 74 62, 66 60" fill="none" stroke="#7209b7" stroke-width="4"/>
+                            <ellipse cx="50" cy="74" rx="26" ry="5" fill="none" stroke="#7209b7" stroke-width="4"/>
+                            <path d="M 42 28 Q 45 22, 42 16" fill="none" stroke="#7209b7" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M 50 28 Q 53 20, 50 14" fill="none" stroke="#7209b7" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M 58 28 Q 61 22, 58 16" fill="none" stroke="#7209b7" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="gift-title">Frühstücken gehen</h3>
+                    <p class="gift-desc">Ein leckeres, ausgiebiges Sonntagsfrühstück mit frischen Brötchen, Croissants, Kaffee und allem, was das Herz begehrt.</p>
+                    <span class="choose-badge font-purple">Frühstück wählen</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Selection Confirmation Dialog -->
+        <div id="selection-modal" class="modal hidden">
+            <div class="modal-content glass-card">
+                <h3 id="modal-title">Hervorragende Wahl!</h3>
+                <p id="modal-body"></p>
+                <button id="modal-close" class="glass-btn primary-btn">Freue mich schon!</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Mit Liebe gemacht für Papa. Deine Emily, 2026</p>
+    </footer>
+
+    <script>
+        /* ----------------------------------------------------
+           HAPPY BIRTHDAY AUDIO SEQUENCER
+           ---------------------------------------------------- */
+        const FREQS = {
+            'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'C5': 523.25,
+            'D5': 587.33, 'E5': 659.25, 'F5': 698.46, 'G5': 783.99,
+            'REST': 0
+        };
+
+        const NOTES = [
+            // Phrase 1
+            { pitch: 'G4', duration: 0.75 },
+            { pitch: 'G4', duration: 0.25 },
+            { pitch: 'A4', duration: 1.0 },
+            { pitch: 'G4', duration: 1.0 },
+            { pitch: 'C5', duration: 1.0 },
+            { pitch: 'B4', duration: 2.0 },
+            { pitch: 'REST', duration: 0.8 },
+            
+            // Phrase 2
+            { pitch: 'G4', duration: 0.75 },
+            { pitch: 'G4', duration: 0.25 },
+            { pitch: 'A4', duration: 1.0 },
+            { pitch: 'G4', duration: 1.0 },
+            { pitch: 'D5', duration: 1.0 },
+            { pitch: 'C5', duration: 2.0 },
+            { pitch: 'REST', duration: 0.8 },
+            
+            // Phrase 3
+            { pitch: 'G4', duration: 0.75 },
+            { pitch: 'G4', duration: 0.25 },
+            { pitch: 'G5', duration: 1.0 },
+            { pitch: 'E5', duration: 1.0 },
+            { pitch: 'C5', duration: 1.0 },
+            { pitch: 'B4', duration: 1.0 },
+            { pitch: 'A4', duration: 2.0 },
+            { pitch: 'REST', duration: 0.8 },
+            
+            // Phrase 4
+            { pitch: 'F5', duration: 0.75 },
+            { pitch: 'F5', duration: 0.25 },
+            { pitch: 'E5', duration: 1.0 },
+            { pitch: 'C5', duration: 1.0 },
+            { pitch: 'D5', duration: 1.0 },
+            { pitch: 'C5', duration: 2.0 },
+            { pitch: 'REST', duration: 2.0 }
+        ];
+
+        let audioCtx = null;
+        let synthTimeoutId = null;
+        let currentNoteIndex = 0;
+        let isMusicPlaying = false;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playNote(freq, startTime, duration) {
+            if (freq === 0) return;
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, startTime);
+            
+            gainNode.gain.setValueAtTime(0, startTime);
+            gainNode.gain.linearRampToValueAtTime(0.25, startTime + 0.02);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, startTime + duration - 0.02);
+            
+            osc.start(startTime);
+            osc.stop(startTime + duration);
+            
+            const subOsc = audioCtx.createOscillator();
+            const subGain = audioCtx.createGain();
+            subOsc.connect(subGain);
+            subGain.connect(audioCtx.destination);
+            
+            subOsc.type = 'sine';
+            subOsc.frequency.setValueAtTime(freq / 2, startTime);
+            
+            subGain.gain.setValueAtTime(0, startTime);
+            subGain.gain.linearRampToValueAtTime(0.08, startTime + 0.04);
+            subGain.gain.exponentialRampToValueAtTime(0.001, startTime + duration - 0.02);
+            
+            subOsc.start(startTime);
+            subOsc.stop(startTime + duration);
+        }
+
+        function playMelodyStep() {
+            if (!isMusicPlaying) return;
+            
+            initAudio();
+            const note = NOTES[currentNoteIndex];
+            const tempo = 450;
+            const noteDuration = note.duration * (tempo / 1000);
+            
+            playNote(FREQS[note.pitch], audioCtx.currentTime, noteDuration);
+            
+            currentNoteIndex = (currentNoteIndex + 1) % NOTES.length;
+            synthTimeoutId = setTimeout(playMelodyStep, note.duration * tempo);
+        }
+
+        function startMusic() {
+            initAudio();
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            if (!isMusicPlaying) {
+                isMusicPlaying = true;
+                currentNoteIndex = 0;
+                playMelodyStep();
+                updateMusicButton(true);
+            }
+        }
+
+        function stopMusic() {
+            isMusicPlaying = false;
+            if (synthTimeoutId) {
+                clearTimeout(synthTimeoutId);
+            }
+            updateMusicButton(false);
+        }
+
+        function playBlowSound() {
+            initAudio();
+            if (!audioCtx) return;
+            
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.15);
+            
+            gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.15);
+        }
+
+        function playCelebrationSound() {
+            initAudio();
+            if (!audioCtx) return;
+            
+            const now = audioCtx.currentTime;
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            notes.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+                
+                gain.gain.setValueAtTime(0, now + idx * 0.08);
+                gain.gain.linearRampToValueAtTime(0.12, now + idx * 0.08 + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.3);
+                
+                osc.start(now + idx * 0.08);
+                osc.stop(now + idx * 0.08 + 0.3);
+            });
+        }
+
+        function updateMusicButton(isPlaying) {
+            const playIcon = document.querySelector('.icon-play');
+            const pauseIcon = document.querySelector('.icon-pause');
+            if (isPlaying) {
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+            } else {
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+            }
+        }
+
+        /* ----------------------------------------------------
+           CANVAS CONFETTI PARTICLE SYSTEM
+           ---------------------------------------------------- */
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        let animationFrameId = null;
+        let isCelebrating = false;
+
+        const CONFETTI_COLORS = [
+            '#ff4d6d', '#ff758f', '#ff85a1', '#f72585',
+            '#7209b7', '#b794f4', '#3f37c9', '#4cc9f0',
+            '#ffd166', '#ffb703', '#ffd819',
+            '#4dadff', '#48cae4', '#00b4d8'
+        ];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class ConfettiParticle {
+            constructor(x, y, isExplosion = false) {
+                this.x = x;
+                this.y = y;
+                this.size = {
+                    width: Math.random() * 8 + 6,
+                    height: Math.random() * 12 + 8
+                };
+                this.color = CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)];
+                
+                if (isExplosion) {
+                    const angle = Math.random() * Math.PI + Math.PI;
+                    const speed = Math.random() * 14 + 6;
+                    this.vx = Math.cos(angle) * speed;
+                    this.vy = Math.sin(angle) * speed;
+                } else {
+                    this.vx = Math.random() * 4 - 2;
+                    this.vy = Math.random() * 3 + 2;
+                }
+                
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 4 - 2;
+                
+                this.wobble = Math.random() * 10;
+                this.wobbleSpeed = Math.random() * 0.05 + 0.02;
+                this.gravity = 0.22;
+                this.drag = 0.97;
+            }
+
+            update() {
+                this.vy += this.gravity;
+                this.vx *= this.drag;
+                this.vy *= this.drag;
+                
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                this.wobble += this.wobbleSpeed;
+                this.x += Math.sin(this.wobble) * 0.5;
+                
+                this.rotation += this.rotationSpeed;
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.fillStyle = this.color;
+                ctx.fillRect(-this.size.width / 2, -this.size.height / 2, this.size.width, this.size.height);
+                ctx.restore();
+            }
+        }
+
+        function triggerExplosion() {
+            const cakeRect = document.querySelector('.cake-wrapper').getBoundingClientRect();
+            const startX = cakeRect.left + cakeRect.width / 2;
+            const startY = cakeRect.top + cakeRect.height / 2;
+            
+            for (let i = 0; i < 160; i++) {
+                particles.push(new ConfettiParticle(startX, startY, true));
+            }
+        }
+
+        function updateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (isCelebrating && Math.random() < 0.25) {
+                particles.push(new ConfettiParticle(Math.random() * canvas.width, -20, false));
+            }
+            
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.update();
+                p.draw();
+                
+                if (p.y > canvas.height + 20 || p.x < -20 || p.x > canvas.width + 20) {
+                    particles.splice(i, 1);
+                }
+            }
+            
+            animationFrameId = requestAnimationFrame(updateConfetti);
+        }
+
+        function startConfettiEngine() {
+            if (!animationFrameId) {
+                updateConfetti();
+            }
+        }
+
+        /* ----------------------------------------------------
+           INTERACTION LOGIC
+           ---------------------------------------------------- */
+        const candles = document.querySelectorAll('.candle');
+        const cakeWrapper = document.querySelector('.cake-wrapper');
+        const greetingCard = document.getElementById('greeting-card');
+        const triggerBtn = document.getElementById('trigger-btn');
+        const giftSection = document.getElementById('gift-section');
+        const musicToggle = document.getElementById('music-toggle');
+
+        const giftCinema = document.getElementById('gift-cinema');
+        const giftBreakfast = document.getElementById('gift-breakfast');
+        const selectionModal = document.getElementById('selection-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const modalClose = document.getElementById('modal-close');
+
+        let blownOutCount = 0;
+        let hasCelebrated = false;
+
+        // Hide greeting card and gift section at start
+        greetingCard.style.opacity = '0';
+        greetingCard.style.transform = 'translateX(-50%) scale(0.7)';
+
+        candles.forEach((candle) => {
+            candle.addEventListener('click', () => {
+                if (!candle.classList.contains('blown-out')) {
+                    candle.classList.add('blown-out');
+                    blownOutCount++;
+                    playBlowSound();
+                    createSmokePuff(candle);
+                    
+                    if (blownOutCount === candles.length) {
+                        celebrateSurprise();
+                    }
+                }
+            });
+        });
+
+        function createSmokePuff(candleElement) {
+            const rect = candleElement.getBoundingClientRect();
+            const puff = document.createElement('div');
+            puff.className = 'smoke-puff';
+            puff.style.left = `${rect.left + rect.width / 2 + window.scrollX - 8}px`;
+            puff.style.top = `${rect.top + window.scrollY - 10}px`;
+            document.body.appendChild(puff);
+            setTimeout(() => { puff.remove(); }, 800);
+        }
+
+        function celebrateSurprise() {
+            if (hasCelebrated) return;
+            hasCelebrated = true;
+            isCelebrating = true;
+            
+            playCelebrationSound();
+            cakeWrapper.classList.add('celebrating');
+            candles.forEach(c => c.classList.add('blown-out'));
+            triggerBtn.classList.add('hidden');
+            
+            startConfettiEngine();
+            triggerExplosion();
+            
+            setTimeout(() => {
+                greetingCard.classList.remove('hidden');
+                // Force reflow for CSS transition
+                void greetingCard.offsetWidth;
+                greetingCard.classList.add('show');
+            }, 1200);
+
+            setTimeout(() => {
+                giftSection.classList.add('reveal');
+                giftSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 1800);
+            
+            setTimeout(() => {
+                startMusic();
+            }, 1500);
+        }
+
+        triggerBtn.addEventListener('click', celebrateSurprise);
+
+        musicToggle.addEventListener('click', () => {
+            initAudio();
+            if (isMusicPlaying) {
+                stopMusic();
+            } else {
+                startMusic();
+            }
+        });
+
+        giftCinema.addEventListener('click', () => {
+            showSelectionModal(
+                "Kinobesuch mit Emily",
+                "Wir gehen zusammen ins Kino deiner Wahl. Ich lade dich auf großes Popcorn, Snacks und ein kühles Getränk ein. Such dir schon mal einen tollen Film aus, Papa. Ich freue mich riesig."
+            );
+        });
+
+        giftBreakfast.addEventListener('click', () => {
+            showSelectionModal(
+                "Frühstücken gehen mit Emily",
+                "Wir gehen gemütlich zusammen frühstücken. Such dir dein absolutes Lieblingscafé aus – ich lade dich ein auf Kaffee, frische Brötchen, Rührei und eine schöne gemeinsame Zeit."
+            );
+        });
+
+        function showSelectionModal(title, body) {
+            modalTitle.textContent = title;
+            modalBody.textContent = body;
+            selectionModal.classList.add('show');
+        }
+
+        modalClose.addEventListener('click', () => {
+            selectionModal.classList.remove('show');
+        });
+
+        selectionModal.addEventListener('click', (e) => {
+            if (e.target === selectionModal) {
+                selectionModal.classList.remove('show');
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                selectionModal.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
